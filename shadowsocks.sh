@@ -7,7 +7,7 @@ check(){
 	result=$(netstat -ntlp|grep $key )
 	echo "Check: $result" >/dev/null 2>&1
 	if [ "$result" == "" ];then
-		ssserver -s $ip -p 6616 -k $pass --workers 10 1>/dev/null 2>&1&
+		ssserver -s $ip -p $port -k $pass --workers 10 1>/dev/null 2>&1&
 	fi
 }
 

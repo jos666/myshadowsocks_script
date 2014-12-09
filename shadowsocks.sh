@@ -42,7 +42,7 @@ create_script(){
 			mv $tempfile $scriptname
 		fi
 	else
-		write_script $filename
+		write_script $scriptname
 	fi
 	[ ! -f $stopscript ]&&create_stop_script
 }

@@ -12,6 +12,13 @@ read -p "Input shdownsocks port:" port
 
 
 scriptname=/root/shdownsocks.sh
+stopscript=/root/stopshdownsocks.sh
+
+create_stop_script(){
+	cat >>$stopscript<<EOF
+kill -9 $(ps aux | grep ssserver| grep -v "grep"| awk '{print $2}')
+EOF
+}
 
 #see diff
 check_diff(){
@@ -36,6 +43,7 @@ create_script(){
 	else
 		write_script $filename
 	fi
+	[ ! -f $stopscript ]&&create_stop_script
 }
 
 
@@ -75,6 +83,8 @@ check \$port
 EOF
 	chmod 755 $filename
 }
+
+
 
 #auto monitor python process
 add_cron(){

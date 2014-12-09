@@ -16,7 +16,7 @@ stopscript=/root/stopshdownsocks.sh
 
 create_stop_script(){
 	cat >>$stopscript<<EOF
-kill -9 $(ps aux | grep ssserver| grep -v "grep"| awk '{print $2}')
+kill -9 \$(ps aux | grep ssserver| grep -v "grep"| awk '{print \$2}')
 EOF
 	chmod 755 $stopscript
 }

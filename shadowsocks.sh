@@ -4,10 +4,10 @@
 
 #set passwd
 read -p "Input passwod:" passwd
+read -p "Input shdownsocks port:" port
 
-if [  -z "$passwd" ];then
-	passwd="testpasswd"
-fi
+[ -z "$passwd" ]&&passwd="testpasswd"
+[ -z "$port" ]&&port=9999 
 
 
 
@@ -43,7 +43,7 @@ create_script(){
 write_script(){
 	filename=$1
 	cat >>$filename<<EOF
-port=9999
+port=$port
 ip=\$(ifconfig eth0 | awk '{if(\$1=="inet")print \$2}'| awk -F":" '{print \$2}')
 pass="$passwd"
 
@@ -78,11 +78,24 @@ EOF
 
 #auto monitor python process
 add_cron(){
-	if [ -z "$(grep $scriptname /etc/crontab)"];then
+	if [ -z "$(grep $scriptname /etc/crontab)" ];then
 		echo "10/* * * * *  root $scriptname" >> /etc/crontab
 	fi
 }
 
+view_info(){
+	$scriptname
+	clear
+	echo " "
+	echo " "
+	echo " "
+	echo " "
+	echo " "
+	echo "                                 Server:$(ifconfig eth0 | awk '{if($1=="inet")print $2}'| awk -F":" '{print $2}')"
+	echo "                                 Port: $port"
+	echo "                                 Password: $passwd"
+}
 #main
 create_script
 add_cron
+view_info

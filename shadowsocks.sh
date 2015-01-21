@@ -79,6 +79,14 @@ init(){
 	fi	
 		
 }
+install_py_setup(){
+	filename=$(type easy_install | awk '{print $3}')
+	if [ $? != 0];then
+		curl  https://bootstrap.pypa.io/ez_setup.py >/tmp/ez_setup.py
+		python /tmp/ez_setup.py 1>/dev/null 2>&1
+	fi
+}
+
 init
 check \$port
 EOF
